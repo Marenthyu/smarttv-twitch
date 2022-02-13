@@ -1,7 +1,7 @@
 /* jshint eqeqeq: true, undef: true, unused: true, node: true, browser: true */
 
 var baseUrlCode = 'https://id.twitch.tv/oauth2/authorize?';
-var type_code = 'code';
+var type_code = 'token';
 var client_id = 'ypvnuqrh98wqz1sr0ov3fgfu4jh1yx';
 var redirect_uri = 'https://fgl27.github.io/smarttv-twitch/release/githubio/login/twitch.html';
 var scope = 'user_read+user_follows_edit+user_subscriptions+chat:edit+chat:read';
@@ -17,7 +17,7 @@ function Start() {
 
 function ProcessStart() {
     console.log("ProcessStart");
-    if (window.location.href.indexOf('code') !== -1) processCode(window.location.href);
+    if (window.location.hash('access_token') !== -1) processCode(window.location.hash);
     else document.getElementById("Authorize").addEventListener("click", autorizationClick);
 }
 
@@ -30,7 +30,7 @@ function autorizationClick() {
 
 function processCode(pageUrl) {
     console.log("processCode");
-    code = pageUrl.match(/code=(\w+)/);
+    code = pageUrl.match(/access_token=(\w+)/);
     if (code) {
         code = code[1];
         document.getElementById('Authorize').classList.add('hidden');
